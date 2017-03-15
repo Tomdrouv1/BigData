@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" ng-app="Twitter">
+<head>
+  <meta charset="utf-8">
+  <title>Stat</title>
+
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-resource.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-sanitize.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+	<script src="//platform.twitter.com/widgets.js"></script>
+	<script src="/javascripts/Stat.js"></script>
+
+</head>
+<body>
+	<div ng-controller="Stat">
+		<div class="row clearfix">
+			<div class="col-lg-12">
+
+				<button class="btn btn-primary" ng-click="getImport()">Import</button>
+
+				<div id="tweet-list">
+
+					<div ng-repeat="tweet in tweetsResult" class="tweet-item">
+						<p>Tweet : {{tweet.text}}</p>
+					</div>
+
+				</div>
+
+			</div>
+	</div>
+</body>
+</html>

@@ -7,126 +7,57 @@ var Tweet = require('../models/tweet');
 // instantiate Twit module
 var twitter = new Twit(config.twitter);
 
-var TWEET_COUNT = 20;
-var MAX_WIDTH = 305;
-var OEMBED_URL = 'statuses/oembed';
-var USER_TIMELINE_URL = 'statuses/user_timeline';
+var TWEET_COUNT = 100;
 var TWEETS_SEARCH_URL = 'search/tweets';
 
 /**
  * GET tweets json.
  */
-router.get('/user_timeline/:user', function(req, res) {
+router.get('/stat', function(req, res) {
+    var query = Tweet.find({});
 
-  var oEmbedTweets = [], tweets = [],
-
-  params = {
-    screen_name: req.params.user, // the user id passed in as part of the route
-    count: TWEET_COUNT // how many tweets to return
-  };
-
-  // the max_id is passed in via a query string param
-  if(req.query.max_id) {
-    params.max_id = req.query.max_id;
-  }
-
-  // request data
-  twitter.get(USER_TIMELINE_URL, params, function (err, data, resp) {
-
-    tweets = data;
-
-    var i = 0, len = tweets.length;
-
-    for(i; i < len; i++) {
-      getOEmbed(tweets[i]);
-    }
-  });
-
-  /**
-   * requests the oEmbed html
-   */
-  function getOEmbed (tweet) {
-
-    // oEmbed request params
-    var params = {
-      "id": tweet.id_str,
-      "maxwidth": MAX_WIDTH,
-      "hide_thread": true,
-      "omit_script": true
-    };
-
-    // request data 
-    twitter.get(OEMBED_URL, params, function (err, data, resp) {
-      tweet.oEmbed = data;
-      oEmbedTweets.push(tweet);
-
-      // do we have oEmbed HTML for all Tweets?
-      if (oEmbedTweets.length == tweets.length) {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(oEmbedTweets);
-      }
+    query.exec(function (error, tweets) {
+        if (error) {
+            console.log(error);
+        } else {
+            res.send(tweets);
+        }
     });
-  }
 });
 
-router.get('/search/:q', function(req, res) {
-    console.log('route ok');
-    var oEmbedTweets = [], tweets = [],
+router.get('/import', function(req, res) {
+    console.log('Import');
+    var tweets = [], max_id = 0;
 
-        params = {
-            q: req.params.q, // the user id passed in as part of the route
-            count: TWEET_COUNT // how many tweets to return
-        };
+    params = {
+        q: 'Emma Watson',
+        count: TWEET_COUNT,
+        max_id: max_id
+    };
 
-    // the max_id is passed in via a query string param
-    // if(req.query.max_id) {
-    //     params.max_id = req.query.max_id;
-    // }
-
-    // request data
-    twitter.get(TWEETS_SEARCH_URL, params, function (err, data, resp) {
-
-        if(err) {
-            console.log(err);
-        }
-        tweets = data;
-
-
-
-        var i = 0, len = tweets.statuses.length;
-
-        for (i; i < len; i++) {
-
-            var tweetMongo = new Tweet(tweets.statuses[i]);
-            tweetMongo.save(function(err, res) {
-                if(err) {
-                    console.log(err);
-                }
-            });
-            getOEmbed(tweets.statuses[i]);
-        }
-    });
-
-    function getOEmbed (tweet) {
-
-        console.log('embed');
-        // oEmbed request params
-        var params = {
-            "id": tweet.id_str,
-            "maxwidth": MAX_WIDTH,
-            "hide_thread": true,
-            "omit_script": true
-        };
+    for(var i = 0; i < 10; i++) {
 
         // request data
-        twitter.get(OEMBED_URL, params, function (err, data, resp) {
-            tweet.oEmbed = data;
-            oEmbedTweets.push(tweet);
+        twitter.get(TWEETS_SEARCH_URL, params, function (err, data, resp) {
 
-            // do we have oEmbed HTML for all Tweets?
-            if (oEmbedTweets.length == tweets.statuses.length) {
-                res.setHeader('Content-Type', 'application/json');
-                res.send(oEmbedTweets);
+            if (err) {
+                console.log(err);
+            }
+            tweets = data;
+
+            var len = tweets.statuses.length;
+
+            params.max_id = tweets.search_metadata.max_id;
+            console.log(tweets.search_metadata.max_id);
+
+            for (var j = 0; j < len; j++) {
+
+                var tweetMongo = new Tweet(tweets.statuses[j]);
+                tweetMongo.save(function (err, res) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
             }
         });
     }
