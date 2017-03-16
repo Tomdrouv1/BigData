@@ -16,6 +16,7 @@
 	<script src="//platform.twitter.com/widgets.js"></script>
 	<script src="/bower_components/Chart.js/Chart.js"></script>
 	<script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+	<script src="/bower_components/angular-moment/angular-moment.js"></script>
 	<script src="/javascripts/Stat.js"></script>
 
 </head>
@@ -26,16 +27,20 @@
 
 				<button class="btn btn-primary" ng-click="getImport()">Import</button>
 
-				<canvas id="polar-area" class="chart chart-polar-area" chart-data="data" chart-labels="labels" chart-options="options">
+				<canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-options="options">
 				</canvas>
 
-				<div id="tweet-list">
+				<canvas id="bar" class="chart chart-bar" chart-data="retweetData" chart-labels="retweetLabels">
+				</canvas>
 
-					<div ng-repeat="tweet in tweetsResult" class="tweet-item">
-						<p>Tweet : {{tweet.text}}</p>
-					</div>
+				<!--<pre>{{retweetData}}</pre>-->
+				<!--<div id="tweet-list">-->
 
-				</div>
+					<!--<div ng-repeat="tweet in tweetsResult" class="tweet-item">-->
+						<!--<p>Tweet : {{tweet.metadata.iso_language_code}}</p>-->
+					<!--</div>-->
+
+				<!--</div>-->
 
 			</div>
 	</div>

@@ -19,6 +19,7 @@ var schema = mongoose.Schema({
     retweeted: Boolean,
     in_reply_to_user_id: String,
     place: Object,
+    user: Object,
     in_reply_to_screen_name: String,
     source: String,
     in_reply_to_status_id: String

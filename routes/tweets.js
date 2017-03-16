@@ -25,6 +25,18 @@ router.get('/stat', function(req, res) {
     });
 });
 
+router.get('/retweets', function(req, res) {
+    var query = Tweet.find().sort([['retweet_count', 'descending']]).limit(20);
+
+    query.exec(function (error, tweets) {
+        if (error) {
+            console.log(error);
+        } else {
+            res.send(tweets);
+        }
+    });
+});
+
 router.get('/import', function(req, res) {
     console.log('Import');
 
