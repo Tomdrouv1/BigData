@@ -1,4 +1,4 @@
-var app = angular.module('Twitter', ['ngResource', 'ngSanitize']);
+var app = angular.module('Twitter', ['ngResource', 'ngSanitize', 'chart.js']);
 
 app.controller('Stat', function($scope, $resource, $timeout) {
 
@@ -22,4 +22,7 @@ app.controller('Stat', function($scope, $resource, $timeout) {
     };
 
     getStat();
+
+    $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+    $scope.data = [300, 500, 100, 40, 120];
 });
