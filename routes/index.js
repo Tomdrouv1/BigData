@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Angular, Node and Twitter API' });
+    res.render('stat');
+});
+
+router.get('/import', function(req, res) {
+    res.redirect('/');
 });
 
 module.exports = router;

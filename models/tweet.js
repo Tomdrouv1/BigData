@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var schema = mongoose.Schema({
-    coordinates: String,
+    coordinates: Object,
     favorited: Boolean,
     truncated: Boolean,
     created_at: Date,
