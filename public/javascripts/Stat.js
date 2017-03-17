@@ -18,21 +18,17 @@ app.controller('Stat', function($scope, $resource, $timeout) {
     }
 
     function addDate(arr, date) {
-        // console.log(date);
         var found = arr.some(function (el) {
-            var current = moment(el.created_at);
-            console.log('dd');
-            return moment(el.created_at) === date;
+            // var current = moment(el.created_at);
+            return el.label == date;
         });
-        // if (!found) {
-        //     arr.push({date: date, count: 1});
-        // } else {
-        //     for (var i = 0; i < arr.length; i++) {
-        //         if (arr[i].date === date) {
-        //             arr[i].count++;
-        //         }
-        //     }
-        // }
+        if (found) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].label === date.toString()) {
+                    arr[i].count++;
+                }
+            }
+        }
     }
 
     function getStat () {
@@ -61,23 +57,54 @@ app.controller('Stat', function($scope, $resource, $timeout) {
         $scope.tweets = $resource('/tweets/stat');
 
         $scope.tweets.query( { }, function (res) {
-            var tweets = [];
-            var now = moment();
+            var now = moment('2017-03-16');
+            var hours = [
+                {
+                    label: '00',
+                    count: 0
+                }, {
+                    label: '01',
+                    count: 0
+                }, {
+                    label: '02',
+                    count: 0
+                }, {
+                    label: '03',
+                    count: 0
+                }, {
+                    label: '04',
+                    count: 0
+                }, {
+                    label: '05',
+                    count: 0
+                }, {
+                    label: '06',
+                    count: 0
+                }, {
+                    label: '07',
+                    count: 0
+                }, {
+                    label: '16',
+                    count: 0
+                }
+             ]
+            ;
             angular.forEach(res, function(tweet) {
-                var tweetDate = tweet.created_at;
-                console.log(moment(tweetDate).minutes());
-                addDate(tweets, now);
+                var current = moment(tweet.created_at);
+                if (current.isSame(now, 'day')) {
+                    addDate(hours, current.hours());
+                }
             });
-            // console.log(tweets);
+            console.log(hours);
             var labels = [];
             var data = [];
-            // for (var i = 0; i < languages.length; i++) {
-            //     labels.push(languages[i]['code']);
-            //     data.push(languages[i]['count']);
-            // }
-            //
-            // $scope.data = data;
-            // $scope.labels = labels;
+            for (var i = 0; i < hours.length; i++) {
+                labels.push(hours[i]['label']);
+                data.push(hours[i]['count']);
+            }
+
+            $scope.hoursData = [data];
+            $scope.hoursLabels = labels;
 
         });
     }
