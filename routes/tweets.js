@@ -14,7 +14,7 @@ var TWEETS_SEARCH_URL = 'search/tweets';
  * GET tweets json.
  */
 router.get('/stat', function(req, res) {
-    var query = Tweet.find({});
+    var query = Tweet.find();
 
     query.exec(function (error, tweets) {
         if (error) {

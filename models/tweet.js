@@ -5,7 +5,11 @@ var schema = mongoose.Schema({
     favorited: Boolean,
     truncated: Boolean,
     created_at: Date,
-    id_str: String,
+    id_str: {
+        type: String,
+        required: true,
+        index: {unique: true}
+    },
     in_reply_to_user_id_str: String,
     contributors: Array,
     text: String,

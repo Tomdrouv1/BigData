@@ -57,7 +57,7 @@ app.controller('Stat', function($scope, $resource, $timeout) {
         $scope.tweets = $resource('/tweets/stat');
 
         $scope.tweets.query( { }, function (res) {
-            var now = moment('2017-03-16');
+            var now = moment('2017-03-17');
             var hours = [
                 {
                     label: '00',
