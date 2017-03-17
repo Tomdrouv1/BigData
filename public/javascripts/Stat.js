@@ -84,7 +84,52 @@ app.controller('Stat', function($scope, $resource, $timeout) {
                     label: '07',
                     count: 0
                 }, {
+                    label: '08',
+                    count: 0
+                }, {
+                    label: '09',
+                    count: 0
+                }, {
+                    label: '10',
+                    count: 0
+                }, {
+                    label: '11',
+                    count: 0
+                }, {
+                    label: '12',
+                    count: 0
+                }, {
+                    label: '13',
+                    count: 0
+                }, {
+                    label: '14',
+                    count: 0
+                }, {
+                    label: '15',
+                    count: 0
+                }, {
                     label: '16',
+                    count: 0
+                }, {
+                    label: '17',
+                    count: 0
+                }, {
+                    label: '18',
+                    count: 0
+                }, {
+                    label: '19',
+                    count: 0
+                }, {
+                    label: '20',
+                    count: 0
+                }, {
+                    label: '21',
+                    count: 0
+                }, {
+                    label: '22',
+                    count: 0
+                }, {
+                    label: '23',
                     count: 0
                 }
              ]
